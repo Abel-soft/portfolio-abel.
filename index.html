@@ -1,430 +1,428 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="assets/css/main.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Abel RABEMAHAFALY — Portfolio</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    :root{
+      --primary:#0b3a66;
+      --muted:#6c757d;
+      --accent:#6ea0d6;
+    }
+
+    body{
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color:#222;
+      background-color:#f8f9fa;
+      line-height:1.55;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      padding:.75rem 1rem;
+      box-shadow:0 2px 6px rgba(0,0,0,0.05);
+    }
+    .navbar .nav-link.active {
+      color: var(--primary) !important;
+      font-weight:600;
+      border-bottom:2px solid var(--primary);
+    }
+
+    /* CONTAINER GLOBAL */
+    main.container {
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(180deg, rgba(11,58,102,0.06), rgba(11,58,102,0.02));
+      padding: 3rem 1.5rem;
+      margin-bottom: 2.5rem;
+      border-radius: .75rem;
+    }
+    .hero .name {
+      color: var(--primary);
+      font-weight:700;
+      font-size:1.6rem;
+    }
+    .job-title { color: var(--muted); font-weight:600; }
+    .photo {
+      width:160px;
+      height:180px;
+      object-fit:cover;
+      border-radius:.75rem;
+      border:4px solid white;
+      box-shadow:0 6px 18px rgba(11,58,102,0.12);
+    }
+    @media(min-width:992px){
+      .hero {display:flex;align-items:center;justify-content:space-between;gap:1.5rem;}
+      .hero .hero-left{flex:1;}
+      .hero .hero-right{text-align:right;width:180px;}
+    }
+
+    /* CONTENT */
+    section {padding-top:1rem;padding-bottom:1rem;}
+    .section-title {color:var(--primary);font-weight:700;margin-bottom:.75rem;}
+    .card-section {
+      border-left:4px solid var(--accent);
+      padding-left:1rem;
+      background:#fff;
+      border-radius:.5rem;
+      box-shadow:0 2px 6px rgba(0,0,0,0.05);
+    }
+    .skill-badge {
+      background:#eef6ff;
+      color:var(--primary);
+      border-radius:6px;
+      padding:.25rem .5rem;
+      margin:.2rem;
+      display:inline-block;
+      font-size:.9rem;
+    }
+    .hr-compact {border-top:1px solid #e9ecef;margin:1rem 0;}
+
+    /* ASIDE */
+    aside {
+      position:sticky;
+      top:90px;
+      align-self:flex-start;
+    }
+    aside .card {
+      border-radius:.75rem;
+      box-shadow:0 3px 10px rgba(0,0,0,0.05);
+      margin-bottom:1.5rem;
+    }
+    @media(max-width:991.98px){
+      aside {margin-top:2rem;}
+    }
+
+    /* FOOTER */
+    footer {
+      font-size:.9rem;
+      color:var(--muted);
+      margin-top:3rem;
+      padding-top:1rem;
+      border-top:1px solid #e9ecef;
+      text-align:center;
+    }
+
+    /* ANIMATION REVEAL */
+    .reveal {opacity:0;transform:translateY(12px);transition:all .55s ease-out;}
+    .reveal.visible {opacity:1;transform:none;}
+
+    /* TEXTE */
+    p, li {font-size:1rem;color:#333;}
+
+    /* Navbar mobile slide avec overlay */
+   /* Mobile menu overlay */
+#navOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  z-index: 999; /* dessous le menu */
+}
+
+#navOverlay.show-overlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Menu mobile */
+#navMenu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 260px;
+  height: 100%;
+  background-color: white;
+  transform: translateX(-260px);
+  transition: transform 0.35s ease;
+  padding: 1rem;
+  z-index: 1050; /* dessus overlay */
+}
+
+#navMenu.show-slide {
+  transform: translateX(0);
+}
+
+#navMenu .btn-close-slide {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 1051; /* au-dessus du menu */
+}
+
+/* Desktop : cacher le bouton croix */
+@media (min-width: 768px) {
+  #navMenu {
+    position: static;
+    transform: none !important;
+    display: flex !important;
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+    box-shadow: none;
+    width: auto;
+    height: auto;
+  }
+  #navMenu .btn-close-slide {
+    display: none;
+  }
+  #navOverlay {
+    display: none;
+  }
+}
+
+  </style>
 </head>
-<body>
-    <header>
-        <nav>
-            <div class="nav-container fixed-top  box ">
-                <div class="container  flex jcsb">
-                        <div class="nav-left flex">
-                            <div class="nav-icon none" id="iconMobileNav"><img src="/assets/images/icons/bars.png" alt="" srcset=""><a href="#"></a></div>
-                            <div class="nav-logo"><a href="#">portfolio</a></div>
 
-                        </div>
-                        <div class="nav-bar flex  jcc">
-                            <a href="#">acceuil</a>
-                            <a href="#portfolio">portfolio</a>
-                            <a href="#about">about</a>
-                            <a href="#competence">competence</a>
-                            <a href="#contact">contact</a>
-                            <a href="#tuto">Tuto</a>
-                        </div>
-                </div>
-            </div>
-            
-        </nav>
-    </header>
+<body data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="90" tabindex="0">
 
-    <div class="mobile-nav none " id="mobileNav">
-        <div class="overlay fixed"></div>
-        <div class="mobile-content fixed">
-            <div class="mobile-header relative">
-                <div class="nav-logo">
-                    <a href="#">portfolio</a>
-                </div>
-                <div class="mobile-close absolute" id="mobile-close">
-                    <img src="/assets/images/icons/close.png" alt="" srcset="">
-                </div>
-            </div>
-            <div class="mobile-body">
-                <ul>
-                    <li class="mobile-item"><a href="">acceuil</a></li>
-                    <li class="mobile-item"><a href="#portfolio">portfolio</a></li>
-                    <li class="mobile-item"><a href="#about">about</a></li>
-                    <li class="mobile-item"><a href="#competence">competence</a></li>
-                    <li class="mobile-item"><a href="#contact">contact</a></li>
-                    <li class="mobile-item"><a href="#tuto">TUTO</a></li>
-                </ul>
-            </div>
-            <div class="mobile-footer"></div>
-        </div>
+<!-- NAVBAR -->
+<nav id="mainNav" class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="#">Abel RABEMAHAFALY</a>
+    <button class="navbar-toggler" type="button" id="menuToggle">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navMenu">
+      <button type="button" class="btn-close btn-close-slide" id="menuClose"></button>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#about">Profil</a></li>
+        <li class="nav-item"><a class="nav-link" href="#skills">Compétences</a></li>
+        <li class="nav-item"><a class="nav-link" href="#project">Projet HVMM</a></li>
+        <li class="nav-item"><a class="nav-link" href="#experience">Expérience</a></li>
+        <li class="nav-item"><a class="nav-link" href="#education">Formation</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+      </ul>
+      <a class="btn btn-sm btn-outline-primary mt-3" href="CV_Abel.pdf" download>
+        <i class="bi bi-download"></i> Télécharger CV
+      </a>
     </div>
-    <section id="acceuil">
-        <div class="container">
-            <div class="acceuil-container flex aic  py-40 ">
-                <div class="moi-image  flex-1">
-                    <img src="/assets/images/profil/me.jpg" alt="" srcset="">
-                </div>
-                <div class="moi flex-1">
-                    <h2>Hello, moi c'est Abel RABEMAHAFALY</h2>
-                    <P>Je suis informaticien developpeur </P>
-                    <div class="moi-info">
-                        <ul>
-                            <li class=" flex gap-10">
-                                <i class="fa-solid fa-location-arrow"></i>
-                                <a href="#">abelrabemahafaly@gmail.com</a>
-                            </li>
-                            <li class="flex gap-10">
-                                <i class="fa-solid fa-location-dot"></i></i>
-                                <a href="#">Mandritsara 415 Madagascar</a>
-                            </li>
-                            <li class="flex gap-10">
-                                <i class="fa-solid fa-phone"></i>
-                                <a href="#">+261338903743</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="moi-sociaux py-20 flex aic jcc gap-20">
-                        <a href=""><i class="fa-brands fa-facebook"></i></a>
-                        <a href=""><i class="fa-brands fa-twitter"></i></a>
-                        <a href=""><i class="fa-brands fa-instagram insta"></i></a>
-                    </div>
+  </div>
+</nav>
 
-                </div>
-            </div>
-            
+<!-- Overlay -->
+<div id="navOverlay"></div>
+
+<!-- CONTAINER -->
+<main class="container">
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-left">
+      <div class="name">RABEMAHAFALY Abel</div>
+      <div class="job-title mb-2">Technicien Informatique</div>
+      <div class="fw-semibold">Développeur Web &amp; Analyste Systèmes d'Information</div>
+      <p class="mt-3 mb-0">Passionné par la création de solutions numériques au service des ressources humaines et de la performance organisationnelle.</p>
+      <p class="text-muted mt-3 mb-0 small">
+        <i class="bi bi-telephone"></i> +261 33 89 03 743 &nbsp; • &nbsp;
+        <i class="bi bi-envelope"></i> <a href="mailto:abelrabemahafaly@gmail.com">abelrabemahafaly@gmail.com</a>
+      </p>
+    </div>
+    <div class="hero-right">
+      <img src="me.jpg" alt="Photo Abel" class="photo">
+    </div>
+  </section>
+
+  <div class="row">
+    <!-- COLONNE GAUCHE -->
+    <div class="col-lg-8">
+
+      <section id="about" class="reveal">
+        <h3 class="section-title">Profil professionnel</h3>
+        <div class="hr-compact"></div>
+        <p>
+          Développeur web et technicien informatique avec une solide expérience en conception d’applications intranet.
+          J’ai conçu et développé une application de gestion du personnel pour l’Hôpital Vaovao Mahafaly Mandritsara (HVMM),
+          intégrant la gestion des absences et des sanctions RH, en utilisant Symfony et MySQL.
+        </p>
+      </section>
+
+      <section id="skills" class="reveal">
+        <h3 class="section-title">Compétences techniques</h3>
+        <div class="hr-compact"></div>
+        <div>
+          <span class="skill-badge">PHP</span>
+          <span class="skill-badge">Symfony</span>
+          <span class="skill-badge">MySQL</span>
+          <span class="skill-badge">HTML5</span>
+          <span class="skill-badge">CSS3 / Bootstrap</span>
+          <span class="skill-badge">JavaScript</span>
+          <span class="skill-badge">Python</span>
+          <span class="skill-badge">Django</span>
+          <span class="skill-badge">Git</span>
         </div>
-    </section>
-    <section id="portfolio">
-        <div class="container">
-            <div class="heading">
-                <h1>portfolio</h1>
-            </div>
-            <div class="galerie-items flex wrap jcc gap-10 ">
-                <div class="galerie-item box-2 ">
-                    
-                    <div class="description  px-10">
-                        <p>siteweb : boulanger artisanale </p>
-                        <div class="portfolio flex gap-10 aic jcsb ">
-                            <div class="portfolio-icons flex gap-5">
-                                <i class="fa-brands fa-html5"></i>
-                                <i class="fa-brands fa-css3-alt"></i>
-                            </div>
-                           <button class="btn"><a href="#">voir</a></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="galerie-item box-2 ">
-                    
-                    <div class="description  px-10">
-                        <p> siteweb : agence de voyage</p>
-                        <div class="portfolio flex gap-10 aic jcsb ">
-                            <div class="portfolio-icons flex gap-5">
-                                <i class="fa-brands fa-html5"></i>
-                                <i class="fa-brands fa-css3-alt"></i>
-                                <i class="fa-brands fa-js"></i>
-                            </div>
-                           <button class="btn"><a href="#">voir</a></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="galerie-item box-2 ">
-                    
-                    <div class="description  px-10">
-                        <p>Projet en cours website: portfolio </p>
-                        <div class="portfolio flex gap-10 aic jcsb ">
-                            <div class="portfolio-icons flex gap-5">
-                                <i class="fa-brands fa-html5"></i>
-                                <i class="fa-brands fa-css3-alt"></i>
-                               
-                            </div>
-                           <button class="btn"><a href="#">voir</a></button>
-                        </div>
-                        
-                       
-                    </div>
-                </div>
-          
-            </div>
+      </section>
+
+      <section id="project" class="reveal card-section mt-3">
+        <h3 class="section-title">Projet universitaire clé — HVMM</h3>
+        <div class="hr-compact"></div>
+        <p><strong>Titre :</strong> Application web pour la gestion du personnel de l’HVMM.</p>
+        <p><strong>Technologies :</strong> Symfony, PHP, MySQL, HTML/CSS, JavaScript, Bootstrap.</p>
+        <ul>
+          <li>Soumission électronique des demandes d’absences.</li>
+          <li>Workflow de validation hiérarchique.</li>
+          <li>Gestion centralisée des sanctions et soldes de congés.</li>
+          <li>Historique complet et notifications.</li>
+        </ul>
+        <p><strong>Rôle :</strong> Analyse, conception UML, développement, déploiement et formation.</p>
+        <button class="btn btn-outline-primary btn-sm mt-2" id="openDemo">Voir une courte démo</button>
+      </section>
+
+      <section id="experience" class="reveal">
+        <h3 class="section-title">Expérience professionnelle</h3>
+        <div class="hr-compact"></div>
+        <div class="mb-3">
+          <h5>Technicien Informatique &amp; Développeur Web</h5>
+          <ul>
+            <li>Maintenance Réseau & Informatique.</li>
+            <li>Développement d'une application intranet RH.</li>
+          </ul>
         </div>
-    </section>
-    <section id="about">
-        <div class="container">
-            <div class="heading">
-                <h1>about me</h1>
-            </div>
-            <div class="about-items flex wrap  gap-10 ">
-                <div class="about-item flex-1  relative  px-10">
-                    <h2>Formation</h2>
-                    <div class="divider"></div>
-                        <div class="icons">
-                            <div class="icon absolute">
-                                <i class="fa-solid fa-graduation-cap"></i>
-                            </div>  
-                            <div class="icon absolute">
-                                <i class="fa-solid fa-graduation-cap"></i>
-                            </div>  
-                            <div class="icon absolute">
-                                <i class="fa-solid fa-graduation-cap"></i>
-                            </div>  
-
-                        </div>
-                        <div class="descriptions">
-                            
-                            <div class="description-item absolute box gap-10 aic flex ">
-                                    <div class="years">2022</div>
-                                    <div class="text">
-                                        <p>
-                                             Master II en informatique : Base de données et Génie Logiciel 
-                                        </p>
-                                        <h4> centemad</h4>
-                                    </div>
-                            </div>
-                            <div class="description-item absolute box aic gap-10 flex ">
-                                    <div class="years">2022</div>
-                                    <div class="text">
-                                        <p>
-                                         Fondamentaux aux concepts avancés du langage python certification 
-                                        </p>
-                                        <h4> fun : france université numerique</h4>
-                                    </div>
-                            </div>
-                            <div class="description-item absolute box gap-10 aic flex ">
-                                    <div class="years">2023</div>
-                                    <div class="text">
-                                        <p>
-                                            Formation enligne complète développeur WEB Full Stack
-                                        </p>
-                                        <h4>mudey 59800 Lille France</h4>
-                                        
-                                    </div>
-                            </div>
-
-                        </div> 
-                    
-                </div>
-                <div class="about-item experience flex-1  relative  px-10">
-                    <h2>experience</h2>
-                    <div class="divider"></div>
-
-                    <div class="icons">
-                        <div class="icon absolute">
-                            <i class="fa-solid fa-briefcase"></i>
-                        </div>  
-                        <div class="icon absolute">
-                            <i class="fa-solid fa-briefcase"></i>
-                        </div>  
-                        <div class="icon absolute">
-                            <i class="fa-solid fa-briefcase"></i>
-                        </div>  
-
-                    </div>
-                    <div class="descriptions">
-                        
-                        <div class="description-item absolute box gap-10 aic flex ">
-                                <div class="years">2023</div>
-                                <div class="text">
-                                    <h4>agence de voyage</h4>
-                                    <h5>Developpeur web junior</h5>
-                                    <p>
-                                        Realiser un site web agence de voyage en html css et javascript
-                                    </p>
-                                  
-                                    
-                                </div>
-                        </div>
-                        <div class="description-item absolute box aic gap-10 flex ">
-                                <div class="years">2024</div>
-                                <div class="text">
-                                    <h4>boulangerie artisanale et portfolio</h4>
-                                    <h5>Developpeur web junior</h5>
-                                    <p>
-                                        Realiser un projet boulangerie artisanale et portfolio en html css 
-                                    </p>
-                                  
-                                    
-                                </div>
-                        </div>
-                        <div class="description-item absolute box gap-10 aic flex ">
-                                <div class="years">2008 jusqu'à ce jour </div>
-                                <div class="text">
-                                    <p>
-                                        Enseignant la mathématique 
-                                    </p>
-                                    <h4> ecole la bonne nouvelle Mandritsara </h4>
-                                </div>
-                        </div>
-
-                    </div> 
-                </div>
-                    
-            </div>
-                                                    
+        <div>
+          <h5>Professeur de Mathématiques</h5>
+          <small class="text-muted">École Bonne Nouvelle (EBN) — Sept. 2008 à aujourd’hui</small>
+          <ul><li>Enseignement et création de supports pédagogiques numériques.</li></ul>
         </div>
-    </section>
-    <section id="competence">
-        <div class="container">
-            <div class="heading">
-                <h1>competence</h1>
-            </div>
-            <div class="competence-items flex wrap jcse  ">
-                <div class="competence-item">
-                    <div class="bars">
-                        <div class="bar">
-                            <div class="bar-info">
-                                <i class="fa-brands fa-html5"></i>
-                                <span>html</span>
-                            </div>
-                            <div class="grogresse-bar html">
-                                <span></span>
-                            </div>
-
-                        </div>
-                        <div class="bar">
-                            <div class="bar-info">
-                                <i class="fa-brands fa-css3-alt"></i>
-                                <span>css</span>
-                            </div>
-                            <div class="grogresse-bar css">
-                                <span></span>
-                            </div>
-                        </div>
-                        <div class="bar">
-                            <div class="bar-info">
-                                <i class="fa-brands fa-js"></i>
-                                <span>javascript</span>
-                            </div>
-                            <div class="grogresse-bar javascript">
-                                <span></span>
-                            </div>
-                        </div>
-                        <div class="bar">
-                            <div class="bar-info">
-                                <img src="" alt="" srcset="">
-                                <span>js</span>
-                            </div>
-                            <div class="grogresse-bar jquery">
-                                <span></span>
-                            </div>
-                        </div>
-                        <div class="bar">
-                            <div class="bar-info">
-                                <i class="fa-brands fa-bootstrap"></i>
-                                <span>bootstrap</span>
-                            </div>
-                            <div class="grogresse-bar bootstrap">
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="competence-item">
-                    <div class="bars">
-                        <div class="bar">
-                            <div class="bar-info">
-                                <i class="fa-brands fa-php"></i>
-                                <span>php</span>
-                            </div>
-                            <div class="grogresse-bar php">
-                                <span></span>
-                            </div>
-    
-                        </div>
-                        <div class="bar">
-                            <div class="bar-info">
-                                <i class="fa-brands fa-python"></i>
-                                <span>python</span>
-                            </div>
-                            <div class="grogresse-bar python">
-                                <span></span>
-                            </div>
-                        </div>
-                        <div class="bar">
-                            <div class="bar-info">
-                              
-                                <span>django</span>
-                            </div>
-                            <div class="grogresse-bar django">
-                                <span></span>
-                            </div>
-                        </div>
-                       
-                        <div class="bar">
-                            <div class="bar-info">
-                               
-                                <span>symfony</span>
-                            </div>
-                            <div class="grogresse-bar symfony">
-                                <span></span>
-                            </div>
-                        </div>
-                       
-                    </div>
-                    
-                </div>
-            </div>
+        <div>
+          <h5>Enseignant-Réseau et Internet</h5>
+          <small class="text-muted">Grande École - BSS (Mandritsara) — Sept. 2025 à aujourd’hui</small>
         </div>
-    </section>
-    <section id="contact">
-        <div class="container">
-            <div class="heading">
-                <h1>contact</h1>
-            </div>
-            <div class="contact-container  ">
-                <div class="contact-info">
-                    <h4>contact me</h4>
-                    <div class="contact-me">
-                        <ul>
-                            <li class=" flex gap-10">
-                                <i class="fa-solid fa-location-arrow"></i>
-                                <a href="#">abelrabemahafaly@gmail.com</a>
-                            </li>
-                            <li class="flex gap-10">
-                                <i class="fa-solid fa-location-dot"></i></i>
-                                <a href="#">Mandritsara 415 Madagascar</a>
-                            </li>
-                            <li class="flex gap-10">
-                                <i class="fa-solid fa-phone"></i>
-                                <a href="#">+261338903743</a>
-                            </li>
-                        </ul>
-                    </div>
+      </section>
 
-                </div>
-                <div class="form-item box  ">
-                    <form action="" method="post">
-                        <div class="form-group flex gap-10">
-                            <input type="text" class="flex-1" name="" id="" placeholder="votre nom......">
-                            <input type="text" class="flex-1" name="" id="" placeholder="votre prénom....">
-                        </div>
-                        <div class="form-group flex">
-                            <input type="mail" class="flex-1" name="" id="" placeholder="votre mail">
-                        </div>
-                        <div class="form-group flex ">
-                            <input type="text" class="flex-1" name="" id="" placeholder="votre subject">
-                        </div>
-                        <div class="form-group flex ">
-                            <textarea name="" id="" class="flex-1" cols="30" rows="10" placeholder="votre message" required ></textarea>
-                        </div>
-                        <div class="form-group flex ">
-                            <button class="btn flex-1"><a href="">Envoyer</a></button>
-                        </div>
+      <section id="education" class="reveal">
+        <h3 class="section-title">Formation</h3>
+        <div class="hr-compact"></div>
+        <p><strong>Master 2 Informatique – BDGL</strong> — CNTEMAD (2020 – 2021)</p>
+        <p><strong>Licence en Informatique – BDGL</strong> — CNTEMAD (2017 – 2019)</p>
+        <p><strong>Python (FUN MOOC)</strong> — 2022</p>
+      </section>
+    </div>
 
-                    </form>
-                   
-                </div>
-            </div>
+    <!-- ASIDE -->
+    <aside class="col-lg-4" id="contact">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="section-title">Contact</h5>
+          <p><i class="bi bi-geo-alt"></i> Mandritsara, Région Sofia, Madagascar</p>
+          <p><i class="bi bi-telephone"></i> +261 33 89 03 743</p>
+          <p><i class="bi bi-envelope"></i> <a href="mailto:abelrabemahafaly@gmail.com">abelrabemahafaly@gmail.com</a></p>
+          <hr>
+          <h6 class="section-title">Compétences rapides</h6>
+          <p class="small"><strong>Backend:</strong> Symfony, PHP</p>
+          <p class="small"><strong>Frontend:</strong> HTML, CSS, JS</p>
+          <p class="small"><strong>Base de données:</strong> MySQL</p>
+          <hr>
+          <h6 class="section-title">Centres d'intérêt</h6>
+          <p class="small">Nouvelles technologies, innovation numérique, enseignement.</p>
         </div>
-    </section>
-    <section id="tuto" class="video-tuto">
-        <video width="350"  controls>
-            <source src="/videos/tutopour Bodo.mp4" type="video/mp4">
-            <source src="mov_bbb.ogg" type="video/ogg">
-            Your browser does not support HTML5 video.
-          </video>
-    </section>
-    <footer>
-    <footer>
-        <div class="container">
-            <p><i class="fa-solid fa-copyright"></i> 2024 by abel-dev</p>
+      </div>
+
+      <div class="card p-3">
+        <h6 class="section-title">Téléchargements</h6>
+        <p class="small mb-2">CV & documents</p>
+        <a class="btn btn-primary btn-sm w-100 mb-2" href="act.iso" download><i class="bi bi-download"></i> Télécharger  (activation)</a>
+        <a class="btn btn-outline-secondary btn-sm w-100" href="CV_Abel.pdf" download><i class="bi bi-download"></i> Télécharger CV (.pdf)</a>
+      </div>
+    </aside>
+  </div>
+
+  <footer>
+    <div>Mis à jour : octobre 2025</div>
+    <div class="small text-muted">© Abel RABEMAHAFALY</div>
+  </footer>
+</main>
+
+<!-- MODAL -->
+<div class="modal fade" id="demoModal" tabindex="-1">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Courte démonstration — Application HVMM</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="ratio ratio-16x9 bg-light d-flex align-items-center justify-content-center" style="min-height:300px">
+          Vidéo / Capture à insérer
         </div>
-    </footer>
-   <script src="/assets/js/main.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Défilement fluide
+  document.querySelectorAll('a.nav-link[href^="#"]').forEach(a=>{
+    a.addEventListener('click', e=>{
+      e.preventDefault();
+      const target=document.querySelector(a.getAttribute('href'));
+      if(!target) return;
+      window.scrollTo({top:target.offsetTop-80,behavior:'smooth'});
+    });
+  });
+
+  // ScrollSpy pour nav actif dynamique
+  const scrollSpy = new bootstrap.ScrollSpy(document.body, {
+    target: '#mainNav',
+    offset: 90
+  });
+
+  // Animation "reveal"
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  },{threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // Modal
+  document.getElementById('openDemo').addEventListener('click',()=>{
+    new bootstrap.Modal(document.getElementById('demoModal')).show();
+  });
+
+  // Menu mobile slide
+  const menu = document.getElementById('navMenu');
+  const toggle = document.getElementById('menuToggle');
+  const closeBtn = document.getElementById('menuClose');
+  const overlay = document.getElementById('navOverlay');
+
+  function openMenu() {
+    menu.classList.add('show-slide');
+    overlay.classList.add('show-overlay');
+  }
+
+  function closeMenu() {
+    menu.classList.remove('show-slide');
+    overlay.classList.remove('show-overlay');
+  }
+
+  toggle.addEventListener('click', openMenu);
+  closeBtn.addEventListener('click', closeMenu);
+  overlay.addEventListener('click', closeMenu);
+
+  // Fermer menu mobile quand on clique sur un lien
+  document.querySelectorAll('#navMenu .nav-link').forEach(link=>{
+    link.addEventListener('click', closeMenu);
+  });
+</script>
+
 </body>
 </html>
